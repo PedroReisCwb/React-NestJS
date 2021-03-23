@@ -12,8 +12,7 @@ export class AuthGuard implements CanActivate {
       this.logger.log('Error authentication.');
       return false;
     }
-    //this.logger.log(`Accept authentication.${request.headers.authorization}`);
-
+    
     request.user = await this.validateToken(request.headers.authorization);
     
     return true;

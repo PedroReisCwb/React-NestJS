@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
 import {
@@ -6,12 +8,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { UserRO } from './user.dto';
+import { IdeaEntity } from 'src/idea/idea.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -22,6 +26,8 @@ export class UserEntity {
   @Column('varchar') username: string;
 
   @Column('text') password: string;
+
+  @OneToMany(type => IdeaEntity, idea => idea.author) ideas: IdeaEntity[];
 
   @BeforeInsert()
   async hashPassword() {
